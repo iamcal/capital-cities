@@ -1,0 +1,139 @@
+<html>
+<head>
+<title>Capital Cities</title>
+<script src="cap.js"></script>
+<script>
+
+var g_i = 2;
+
+function aclick(i){
+	document.getElementById('c'+i).style.display = 'none';
+	document.getElementById('a'+i).style.display = 'block';
+}
+
+function addq(q, a){
+	var i = ++g_i;
+
+	var tr = document.createElement('tr');
+	var td1 = document.createElement('td');
+	var td2 = document.createElement('td');
+	var div1 = document.createElement('div');
+	var div2 = document.createElement('div');
+	var div3 = document.createElement('div');
+
+	div1.className = 'question';
+	div1.appendChild(document.createTextNode(q));
+
+	div2.id = 'c'+i;
+	div2.className = 'click'
+	div2.onclick = function(){ var a=i; aclick(a); };
+	div2.appendChild(document.createTextNode('Click for answer...'));
+
+	div3.id = 'a'+i;
+	div3.className = 'answer'
+	div3.appendChild(document.createTextNode(a));
+
+	td1.appendChild(div1);
+	td2.appendChild(div2);
+	td2.appendChild(div3);
+
+	tr.appendChild(td1);
+	tr.appendChild(td2);
+
+	document.getElementById('mybody').appendChild(tr);
+}
+
+window.onload = function(){
+
+	var k = [];
+	for (i in g_cities){
+		k.push(i);
+	}
+
+	var pick = 30;
+
+	var used = {};
+	var use = [];
+
+	for (var j=0; j<pick; j++){
+
+		do {
+
+			var x = r(0, k.length-1);
+
+		} while (used[x]);
+
+		used[x] = 1;
+		use.push(k[x]);
+	}
+
+	for (var i=0; i<use.length; i++){
+
+		//alert(use[i]);
+		addq(use[i], g_cities[use[i]]);
+	}
+}
+
+function r(m,n){ return Math.floor(Math.random() * n - m + 1) + m; }
+
+</script>
+<style>
+
+body {
+	text-align: center;
+}
+
+div.question {
+	width: 200px;
+	background-color: #cfc;
+	cursor: pointer;
+	padding: 1em;
+	text-align: center;
+}
+
+div.click {
+	width: 200px;
+	background-color: #ccf;
+	cursor: pointer;
+	padding: 1em;
+	text-align: center;
+}
+
+div.click:hover {
+	background-color: #99f;
+}
+
+div.answer {
+	display: none;
+	width: 200px;
+	background-color: green;
+	color: white;
+	padding: 1em;
+	text-align: center;
+}
+
+
+</style>
+</head>
+<body>
+
+<h1>Capital Cities</h1>
+
+<table border="1" align="center">
+	<tbody id="mybody">
+<!--
+	<tr>
+		<td>
+			<div class="question">One</div>
+		</td>
+		<td>
+			<div id="c1" class="click" onclick="aclick(1);">Click</div>
+			<div id="a1" class="answer">Answer</div>
+		</td>
+	</tr>
+-->
+	</tbody>
+</table>
+
+</body>
+</html>
